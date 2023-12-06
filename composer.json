@@ -1,0 +1,30 @@
+{
+    "name": "zirvu/api",
+    "description": "Zirvu API",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Zirvu\\Api\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "zirvu",
+            "email": "ariefzir45@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zirvu\\Api\\ZirvuApiPackageServiceProvider"
+            ],
+            "config": [
+                "config/zirvu/api/classes.php"
+            ]
+        }
+    }
+}
