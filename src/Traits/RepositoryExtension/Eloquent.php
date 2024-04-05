@@ -52,18 +52,17 @@ trait Eloquent
             "created_at", "updated_at", "deleted_at", 
             "input_by", "edit_by", "id"
         ];
+        $columns = Schema::getColumnListing($this->table_name);
+        $result = [];
 
-        $table = Schema::getConnection()->getDoctrineSchemaManager()
-            ->listTableDetails($this->table_name);
-
-        foreach ($table->getColumns() as $column) {
-            $field = $column->getName();
-            $result[$field] = [
-                "field" => $field,
-                "type" => $column->getType()->getName(),
-                "isNullable" => $column->getNotnull(),
-                "default" => $column->getDefault(),
-            ];
+        foreach ($columns as $field) {
+          $columnDetails = \DB::select('DESCRIBE ' . $this->table_name . ' `' . $field . '`')[0];
+          $result[$field] = [
+            "field" => $field,
+            "type" => $columnDetails->Type,
+            "isNullable" => $columnDetails->Null === 'YES',
+            "default" => $columnDetails->Default,
+          ];
         }
 
         if(!$extend) {
