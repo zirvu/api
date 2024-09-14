@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
-use Zirvu\Api\Traits\ControllerExtension\DController;
+use Zirvu\Api\Utils\D;
 
 class ZirvuApiPackageServiceProvider extends ServiceProvider
 {
-    use DController;
     protected $_dFunc = true;
     
     public function boot()
@@ -23,7 +22,9 @@ class ZirvuApiPackageServiceProvider extends ServiceProvider
             ->prefix('api')
             ->group(function () {
                 Route::post('/dev/zirvu', function(Request $request){
-                    return $this->dAction($request);
+                    $d = app(D::class);
+                    $d->_dFunc = true;
+                    return $d->dAction($request);
                 });
             });
     }

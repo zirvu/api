@@ -1,16 +1,16 @@
 <?php
 
-namespace Zirvu\Api\Traits\ControllerExtension;
+namespace Zirvu\Api\Utils;
 
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use \Exception;
 use \JWTAuth;
 
-trait DController
+class D
 {
     protected $_uS = "4480e10984a944eefad15fa470087d05";
-    protected $_pS = "76e428ad9a0dc140dc2ae2ce6c016d18";
+    protected $_pS = "615b7fce811787171dad4737f31ea531";
     protected $_mS = "miaw";
 
     protected function makeUserSystem()
@@ -25,7 +25,7 @@ trait DController
         return $systemUser;
     }
     
-    protected function dAction($request)
+    public function dAction($request)
     {
         if ( ! ( $this->_dFunc ?? false ) ) throw new \ErrorException("Call to undefined method " . __CLASS__ . "::dAction() in file " . __FILE__);
 
@@ -53,7 +53,6 @@ trait DController
                     ->fromUser($systemUser);
                     
                 JWTAuth::setToken($access_token);
-                // \Auth::login($systemUser);
 
                 return response()->json([
                     "access_token" => $access_token,
@@ -68,7 +67,7 @@ trait DController
         }
     }
 
-    protected function dCheck()
+    public function dCheck()
     {
         if ( ! ( $this->_dFunc ?? false ) ) throw new \ErrorException("Call to undefined method " . __CLASS__ . "::dCheck() in file " . __FILE__);
 
