@@ -77,6 +77,27 @@ trait CommonService
         }
         return $data;
     }
+    
+    public function update($id, array $fields)
+    {
+        try {
+            $data = $this->baseRepository->find($id);
+            if ( !$data ) {
+                throw new Exception("Data not found", 1);
+            }
+            $fieldsData = $data->toArray();
+
+            foreach ($fields as $key => $value) {
+                $fieldsData[$key] = $value;
+            }
+
+            $this->save($id, $fieldsData);
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
+        return $data;
+    }
 
     public function delete(array $ids)
     {
