@@ -91,7 +91,8 @@ trait CommonService
                 $fieldsData[$key] = $value;
             }
 
-            $this->save($id, $fieldsData);
+            // $this->save($id, $fieldsData);
+            $data = $this->baseRepository->save($id, $fieldsData);
 
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), 1);
