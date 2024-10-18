@@ -29,7 +29,8 @@ class UtilsService
             "filter" => $object->filter ?? "",
             "order" => $object->order ?? "",
             "order_method" => $object->order_method ?? "",
-            "with" => $this->getWith($object)
+            "with" => $this->getWith($object),
+            "select" => $object->select ?? [],
         ];
     }
 

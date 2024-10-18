@@ -28,11 +28,18 @@ trait CommonRepository
         $this->filter = $object->filter ?? "";
         $this->order = $object->order ?? "";
         $this->order_method = $object->order_method ?? "";
+        $select = $object->select ?? [];
 
         $data = null;
+        
         try {
 
             $this->model = $this->model->with($object->with ?? []);
+
+            if ( !empty($select) ) {
+                $this->model = $this->model->select($select);
+            }
+
             $data = $this->getData($type);
             
         } catch (RelationNotFoundException $e) {
