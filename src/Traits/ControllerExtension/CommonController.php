@@ -161,4 +161,24 @@ trait CommonController
 
         return $this->response($statusCode);
     }
+
+    public function saveMany(Request $request)
+    {
+        $statusCode = 200;
+
+        try {
+            $id = $request->id ?? null;
+            $datas = $request->all();
+
+            $this->data = $this->baseService->saveMany($datas);
+            
+        } catch (Exception $e) {
+            $statusCode = 500;
+            $this->success = false;
+            $this->message = $e->getMessage();
+            $this->data = $this->baseService->data;
+        }
+
+        return $this->response($statusCode);
+    }
 }

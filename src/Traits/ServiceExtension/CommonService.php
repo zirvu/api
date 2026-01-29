@@ -122,4 +122,29 @@ trait CommonService
         return $result;
     }
 
+    public function saveMany($datas)
+    {
+        DB::beginTransaction();
+
+        try {
+            $result = [];
+
+            foreach ($datas as $key => $fields) {
+                if ( is_array($fields) ) {
+                    $service = clone $this;
+    
+                    $id = $fields["id"] ?? null;
+                    $data = $service->save($id, $fields);
+                    $result[] = $service->find($data->id);
+                }
+
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
+        return $result;
+    }
+
 }
